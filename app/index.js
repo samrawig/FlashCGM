@@ -401,11 +401,8 @@ function updateBGPollingStatus() {
 function updateSettings(data) {
   //  console.log("Whatsettings:" + JSON.stringify(settings));
     prefBgUnits = data.settings.bgDataUnits;
-    prefHighTarget = data.settings.bgTargetTop;
-    prefLowTarget = data.settings.bgTargetBottom;
     prefHighLevel = data.settings.bgHighLevel;
     prefLowLevel = data.settings.bgLowLevel;
-    defaultBGColor = data.settings.bgColor;
     myBGUnits.text = prefBgUnits;
     lastSettingsUpdate = Date.now()/1000;
   }

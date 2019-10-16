@@ -1,6 +1,7 @@
 import { settingsStorage } from "settings";
 import * as messaging from "messaging";
 import { me } from "companion"; 
+import {dataPoll, settingsPoll} from "./includes/polling";
 
 //let bgDataType = JSON.parse(settingsStorage.getItem("dataType"));
 var bgDataType = "mg/dl";
@@ -28,93 +29,7 @@ messaging.peerSocket.close = () => {
   console.log("Companion Socket Closed");
 }
 
-const dataPoll = () => {
-  dataUrl = JSON.parse(settingsStorage.getItem("dataSourceURL")).name;
-  if (dataUrl == "" || dataUrl == null) {
-    dataUrl = "http://127.0.0.1:17580/sgv.json?count=24&brief_mode=Y";
-  }
-  console.log('Open Data API CONNECTION');
-  console.log(dataUrl);
-  if(dataUrl) {
-    fetch(dataUrl,{
-      method: 'GET',
-      mode: 'cors',
-      headers: new Headers({
-        "Content-Type": 'application/json; charset=utf-8'
-      })
-    })
-      .then(response => {
- //       console.log('Get Data From Phone');
-        response.text().then(data => {
-          console.log('fetched Data from API');
-          let obj = JSON.parse(data);
-          let returnval = buildGraphData(data);
-        })
-        .catch(responseParsingError => {
-          console.log("Response parsing error in data!");
-          console.log(responseParsingError.name);
-          console.log(responseParsingError.message);
-          console.log(responseParsingError.toString());
-          console.log(responseParsingError.stack);
-        });
-      }).catch(fetchError => {
-        console.log("Fetch Error in data!");
-        console.log(fetchError.name);
-        console.log(fetchError.message);
-        console.log(fetchError.toString());
-        console.log(fetchError.stack);
-      })
-  } else {
-    console.log('no url stored in settings to use to get data.');
-  }
-  return true;
-};
 
-const settingsPoll = () => {
-  if ((lastSettingsUpdate+3600) <= (Date.now()/1000)) {
-    settingsUrl = JSON.parse(settingsStorage.getItem("settingsSourceURL")).name;
-    if (settingsUrl == "" || settingsUrl == null) {
-      settingsUrl = "http://127.0.0.1:17580/status.json";
-    }
-    console.log('Open Settings API CONNECTION');
-    console.log(settingsUrl);
-    if (settingsUrl) {
-      fetch(settingsUrl, {
-        method: 'GET',
-        mode: 'cors',
-        headers: new Headers({
-          "Content-Type": 'application/json; charset=utf-8',
-        }),
-      })
-        .then(response => {
-   //       console.log('Get Settings From Phone');
-          response.text().then(statusreply => {
-            console.log("fetched settings from API");
-            lastSettingsUpdate = Date.now()/1000;
-            let returnval = buildSettings(statusreply);
-          })
-            .catch(responseParsingError => {
-              console.log('Response parsing error in settings!');
-              console.log(responseParsingError.name);
-              console.log(responseParsingError.message);
-              console.log(responseParsingError.toString());
-              console.log(responseParsingError.stack);
-            });
-        }).catch(fetchError => {
-          console.log('Fetch error in settings!');
-          console.log(fetchError.name);
-          console.log(fetchError.message);
-          console.log(fetchError.toString());
-          console.log(fetchError.stack);
-        });
-    } else {
-      console.log("no url stored in app settings to use to get settings.");
-    }
-  } else {
-  }
-
-  return true;
-};
 
 function buildSettings(settings) {
   // Need to setup High line, Low Line, Units.
@@ -122,14 +37,10 @@ function buildSettings(settings) {
 //  console.log(JSON.stringify(obj));
   bgHighLevel = obj.settings.thresholds.highThreshold;
   bgLowLevel = obj.settings.thresholds.lowThreshold;
-  bgTargetTop = obj.settings.thresholds.bgTargetTop;
-  bgTargetBottom = obj.settings.thresholds.bgTargetBottom;
   bgDataUnits = obj.settings.glucoseUnits;
   
   const messageContent = {"settings": {
       "bgDataUnits" : bgDataUnits,
-      "bgTargetTop" : bgTargetTop,
-      "bgTargetBottom" : bgTargetBottom,
       "bgHighLevel" : bgHighLevel,
       "bgLowLevel" : bgLowLevel
     },
@@ -249,7 +160,7 @@ settingsStorage.onchange = function(evt) {
       me.wakeInterval = undefined;
     }
   }
-  if (evt.key==="bgDisplayColor") {
+  if ((evt.key==="timeFormat")||(evt.key==="dateFormat")) {
     if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
       var bgDisplayColor = settingsStorage.getItem("bgDisplayColor").replace(/^"(.*)"$/, '$1')
       var messageContent = {
