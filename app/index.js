@@ -39,19 +39,19 @@ const stepsGoal = goals.steps;
 const elevationGoal = goals.elevationGain;
 
 // Get a handle on the <text> element
-let myClock = getElementById("myLabel", document) as HTMLElement;
-let myDate = getElementById("myDate", document) as HTMLElement;
+let myClock = getElementById("myLabel", document);
+let myDate = getElementById("myDate", document);
 
 //Normal Flashring handles below.
-var dailysteps = getElementById("mySteps", document) as HTMLElement;
-var dailystairs = getElementById("myStairs", document) as HTMLElement;
-var dailycals = getElementById("myCals", document) as HTMLElement;
-var currentheart = getElementById("myHR", document) as HTMLElement;
-let heartRing = getElementById("hrtArc", document) as ArcElement;
-let stepRing = getElementById("stepsArc", document) as ArcElement;
-let calRing = getElementById("calsArc", document) as ArcElement;
-let upperLine = getElementById("upperLine", document) as HTMLElement;
-let bottomLine = getElementById("bottomLine", document) as HTMLElement;
+var dailysteps = getElementById("mySteps", document);
+var dailystairs = getElementById("myStairs", document);
+var dailycals = getElementById("myCals", document);
+var currentheart = getElementById("myHR", document);
+let heartRing = getElementById("hrtArc", document);
+let stepRing = getElementById("stepsArc", document);
+let calRing = getElementById("calsArc", document);
+let upperLine = getElementById("upperLine", document);
+let bottomLine = getElementById("bottomLine", document);
 
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -61,23 +61,23 @@ let bottomLine = getElementById("bottomLine", document) as HTMLElement;
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 //Define screen change stuff and display stuff
-let MainScreen = getElementById("MainScreen", document) as HTMLElement;
-let GraphScreen= getElementById("GraphScreen", document) as HTMLElement;
-var scale1 = getElementById("scale1", document) as HTMLElement;
-var scale2 = getElementById("scale2", document) as HTMLElement;
-var scale3 = getElementById("scale3", document) as HTMLElement;
-var scale4 = getElementById("scale4", document) as HTMLElement;
-var scale5 = getElementById("scale5", document) as HTMLElement;
-let button1 = getElementById("button1", document) as HTMLElement;
-let button2 = getElementById("button2", document) as HTMLElement;
+let MainScreen = getElementById("MainScreen", document);
+let GraphScreen= getElementById("GraphScreen", document);
+var scale1 = getElementById("scale1", document);
+var scale2 = getElementById("scale2", document);
+var scale3 = getElementById("scale3", document);
+var scale4 = getElementById("scale4", document);
+var scale5 = getElementById("scale5", document);
+let button1 = getElementById("button1", document);
+let button2 = getElementById("button2", document);
 let arrowIcon = {"Flat":"\u{2192}","DoubleUp":"\u{2191}\u{2191}","SingleUp":"\u{2191}","FortyFiveUp":"\u{2197}","FortyFiveDown":"\u{2198}","SingleDown":"\u{2193}","DoubleDown":"\u{2193}\u{2193}","None":"-","NOT COMPUTABLE":"-","RATE OUT OF RANGE":"-"};
 
 //Inserted for main screen CGM Data
-let myCurrentBG = getElementById("myCurrentBG", document) as HTMLElement;
-let myBGUnits = getElementById("myBGUnits", document) as HTMLElement;
-let myBGPollCounterLabel1 = getElementById("myBGPollCounterLabel1", document) as HTMLElement;
-let myMissedBGPollCounter = getElementById("myMissedBGPollCounter", document) as HTMLElement;
-let myBGTrend = getElementById("myBGTrend", document) as HTMLElement;
+let myCurrentBG = getElementById("myCurrentBG", document);
+let myBGUnits = getElementById("myBGUnits", document);
+let myBGPollCounterLabel1 = getElementById("myBGPollCounterLabel1", document);
+let myMissedBGPollCounter = getElementById("myMissedBGPollCounter", document);
+let myBGTrend = getElementById("myBGTrend", document);
 let bgCount = 24;
 let prefBgUnits = "unset";
 var defaultBGColor = "grey";
@@ -483,10 +483,10 @@ function stopVibration() {
 //
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-let myPopup = getElementById("popup", document) as HTMLElement;
+let myPopup = getElementById("popup", document);
 let btnLeft = myPopup.getElementById("btnLeft");
 let btnRight = myPopup.getElementById("btnRight");
-let alertHeader = getElementById("alertHeader", document) as HTMLElement;
+let alertHeader = getElementById("alertHeader", document);
 
 
 function showAlert(message) {
@@ -574,11 +574,6 @@ if (!Array.prototype.findIndex) {
 }
 
 //Add a rounding function that displays BG values more "nicely".
-interface myNamespaceType {
-  round: Function;
-};
-
-var myNamespace = {} as myNamespaceType;
 
 myNamespace.round = function(number, precision) {
     var factor = Math.pow(10, precision);

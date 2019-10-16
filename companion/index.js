@@ -120,12 +120,11 @@ function buildSettings(settings) {
   // Need to setup High line, Low Line, Units.
   var obj = JSON.parse(settings);
 //  console.log(JSON.stringify(obj));
-  bgHighLevel = obj.settings.thresholds.bgHigh;
-  bgLowLevel = obj.settings.thresholds.bgLow;
+  bgHighLevel = obj.settings.thresholds.highThreshold;
+  bgLowLevel = obj.settings.thresholds.lowThreshold;
   bgTargetTop = obj.settings.thresholds.bgTargetTop;
   bgTargetBottom = obj.settings.thresholds.bgTargetBottom;
-  bgDataUnits = obj.settings.units;
-  settingsStorage.setItem("unitsType", JSON.stringify(bgDataUnits));
+  bgDataUnits = obj.settings.glucoseUnits;
   
   const messageContent = {"settings": {
       "bgDataUnits" : bgDataUnits,

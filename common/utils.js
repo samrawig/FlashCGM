@@ -1,5 +1,5 @@
 //Nice suggestion from @Sergius on catching undefined elements and throwing an error you can work with.
-export const getElementById = (id: string, root: ElementSearch = document) => {
+export const getElementById = (id, root) => {
   const element = root.getElementById(id);
   if (!element) {
       throw Error(`Element #${id} not found`);f
