@@ -182,7 +182,8 @@ messaging.peerSocket.onmessage = function(evt) {
   console.log(JSON.stringify(evt.data));
   if (evt.data.hasOwnProperty("RequestType")) {
   if (evt.data.RequestType === "Settings" ) {
-     settingsPoll();
+    // Modify this to pass appropriate data in a single function instead of being lazy. 
+    buildSettings(statusreply);
   }
   if (evt.data.RequestType === "Data" ) {
    dataPoll();
